@@ -9,6 +9,7 @@ async function isAuthenticated(req, res, next) {
     const token = authHeader && authHeader.split(" ")[1];
     if (token) {
       firebaseUser = await firebaseAdmin.auth.verifyIdToken(token);
+      console.log("firebaseUser", firebaseUser);
     }
     if (!firebaseUser) return res.sendStatus(401);
     const user = await User.findOne({
@@ -25,7 +26,6 @@ async function isAuthenticated(req, res, next) {
     res.sendStatus(401);
   }
 }
-
 
 const commonRole = (req, res, next) => {
   try {
