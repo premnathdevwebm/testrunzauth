@@ -15,7 +15,6 @@ eventEmitter.on("userinfo", async (data) => {
   const amqpCtl = await connectMessageQue();
 
   amqpCtl.sendToQueue(process.env.RABBIT_MQ_PROCEDURE, Buffer.from(sendingData, 'utf-8'));
-  amqpCtl.sendToQueue(process.env.RABBIT_MQ_EXPERIMENT, Buffer.from(sendingData, 'utf-8'));
 
   /* 
   amqpCtl.sendToQueue(process.env.RABBIT_MQ_MOREINFO, Buffer.from(sendingData, 'utf-8'));
@@ -28,6 +27,7 @@ eventEmitter.on("userinfo", async (data) => {
   amqpCtl.sendToQueue(process.env.RABBIT_MQ_CODEEDITOR, Buffer.from(sendingData, 'utf-8'));
   amqpCtl.sendToQueue(process.env.RABBIT_MQ_CHART, Buffer.from(sendingData, 'utf-8'));
  */
+  await purgeMessageQue(process.env.RABBIT_MQ_EXPERIMENT)
   /* 
  await purgeMessageQue(process.env.RABBIT_MQ_MOREINFO)
  await purgeMessageQue(process.env.RABBIT_MQ_PROCEDURE)
