@@ -140,9 +140,9 @@ const createUser = async (req, res) => {
       email,
       name,
       timeZone,
-      firstName,
-      lastName,
-      lab,
+      firstname,
+      lastname,
+      labtype,
       organization,
       department,
       role,
@@ -167,8 +167,8 @@ const createUser = async (req, res) => {
         name,
         firebaseId: newFirebaseUser.uid,
         timeZone,
-        firstname: firstName,
-        lastname: lastName,
+        firstname,
+        lastname,
         role,
         activeStatus
       });
@@ -179,11 +179,11 @@ const createUser = async (req, res) => {
         name,
         firebaseId: newFirebaseUser.uid,
         timeZone,
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         role,
         activeStatus,
-        lab,
+        labtype,
         organization,
         department
       });
