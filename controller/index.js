@@ -233,10 +233,15 @@ const firebaseGoogleSignin = async (req, res) => {
   };
   const options = { upsert: true };
   try {
-    await User.updateOne(filter, update, options);
+   await User.updateOne(filter, update, options);
+   const result = await User.findOne(filter)
+   const resultData = await emitEvent("userinfo", result);
+   if (resultData === "Event handled successfully") {
     return res
       .status(200)
       .json({ success: "Google Account logged successfully. Please sign in." });
+   }
+   return res.status(400).json({ success: "Problem in Creating user." });
   } catch (err) {
     console.log(err.code);
     return res.status(500).json({ error: "Server error. Please try again" });
@@ -252,9 +257,14 @@ const firebaseMicrosoftSignin = async (req, res) => {
   const options = { upsert: true };
   try {
     await User.updateOne(filter, update, options);
+    const result = await User.findOne(filter)
+   const resultData = await emitEvent("userinfo", result);
+   if (resultData === "Event handled successfully") {
     return res.status(200).json({
       success: "Microsoft Account logged successfully. Please sign in.",
     });
+  }
+  return res.status(400).json({ success: "Problem in Creating user." });
   } catch (err) {
     console.log(err.code);
     return res.status(500).json({ error: "Server error. Please try again" });
