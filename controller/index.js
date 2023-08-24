@@ -85,7 +85,12 @@ eventEmitter.on("adduser", async (data, callback) => {
 
 const validate = async (req, res) => {
   try {
+    const resultData = await emitEvent("userinfo", req.user);
+    if (resultData === "Event handled successfully") {
     return res.status(200).json(req.user);
+    }else{
+      return res.status(400).send("Try again later");
+    }
   } catch (err) {
     return res.status(500).json({ error: "Server error. Please try again" });
   }
